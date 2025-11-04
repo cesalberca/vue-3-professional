@@ -130,13 +130,18 @@ export const courseStructure: CourseStructure = {
                 'Define contratos de repositorio y crea implementaciones (API, memoria) para desacoplar el dominio.',
               mdxPath: '/src/content/buenas-practicas-y-herramientas/arquitectura/repository/index.mdx',
             },
-
             {
               id: 'capas',
               title: 'Capas de arquitectura',
               description:
                 'Entiende la separación por capas (domain, application, infrastructure, delivery) y sus responsabilidades.',
               mdxPath: '/src/content/buenas-practicas-y-herramientas/arquitectura/capas/index.mdx',
+            },
+            {
+              id: 'middlewares',
+              title: 'Middlewares',
+              description: 'Abstraer lógica en middlewares',
+              mdxPath: '/src/content/buenas-practicas-y-herramientas/arquitectura/middlewares/index.mdx',
             },
           ],
         },
@@ -148,9 +153,8 @@ export const courseStructure: CourseStructure = {
             {
               id: 'tipado-props-emits',
               title: 'Tipando props y emits',
-              description: 'Añade tipos a props y eventos usando <script setup lang=\'ts\'>, defineProps y defineEmits.',
-              mdxPath:
-                '/src/content/buenas-practicas-y-herramientas/typescript/tipado-props-emits/index.mdx',
+              description: "Añade tipos a props y eventos usando <script setup lang='ts'>, defineProps y defineEmits.",
+              mdxPath: '/src/content/buenas-practicas-y-herramientas/typescript/tipado-props-emits/index.mdx',
             },
           ],
         },

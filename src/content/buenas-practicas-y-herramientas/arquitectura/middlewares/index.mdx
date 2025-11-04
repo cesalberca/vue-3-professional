@@ -1,0 +1,23 @@
+En este ejercicio verás cómo refactorizar una llamada HTTP que está hecha directamente desde un componente para pasar a ejecutarla a través de un **Caso de Uso (Use Case)**, orquestado por un **UseCaseService**.
+
+## Objetivo
+
+- Empezar con un componente que hace `fetch` directamente a `https://jsonplaceholder.typicode.com/todos/1`.
+- Refactorizar para mover esa lógica a un caso de uso (`Query`) y ejecutarlo a través del `UseCaseService`.
+
+## Conceptos clave
+
+- Use Case (Caso de Uso): Encapsula un único propósito de aplicación. Evita lógica de dominio en los componentes.
+- UseCaseService: Orquesta la ejecución.
+- Query vs Command: Consultas que leen datos (Query) vs acciones que modifican estado (Command).
+
+## Tareas
+
+1. Abre y prueba el componente de ejemplo `Exercise.vue` que hace la llamada directamente en el componente.
+2. Crea un caso de uso `GetTodoQry` que obtenga un Todo por id desde `jsonplaceholder`.
+3. Expón un contenedor de dependencias que cree las instancias y las exporte.
+4. Refactoriza el componente para invocar el `GetTodoQry` a través del `UseCaseService`.
+
+## Pistas
+
+- Un `Query<Out, In>` es solo un `UseCase<In, Out>` que retorna datos sin efectos colaterales.

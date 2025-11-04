@@ -7,7 +7,10 @@
         Punto de partida sin tipos estáticos en <code>defineProps</code> y <code>defineEmits</code>. Añade TypeScript.
       </p>
       <ul class="list-disc pl-5 text-sm text-muted-foreground">
-        <li>Tipa las props con generics de <code>defineProps&lt;T&gt;()</code> en el componente hijo <code>Component.vue</code>.</li>
+        <li>
+          Tipa las props con generics de <code>defineProps&lt;T&gt;()</code> en el componente hijo
+          <code>Component.vue</code>.
+        </li>
         <li>Tipa los eventos con <code>defineEmits&lt;T&gt;()</code> usando tuplas en <code>Component.vue</code>.</li>
         <li>Marca opcionales y añade defaults donde aplique.</li>
       </ul>

@@ -1,0 +1,123 @@
+## Refactor: Del componente al Caso de Uso (Use Case)
+
+A continuación verás cómo mover la lógica de `fetch` fuera del componente y encapsularla en un **Use Case**. Lo ejecutaremos a través de un **UseCaseService**. Para el ejercicio, usaremos una infraestructura mínima ya copiada en esta carpeta (`./core/use-cases`).
+
+### 1) Definir el Query `GetTodoQry`
+
+En la carpeta del ejercicio, podríamos crear algo como `application/get-todo.qry.ts` (esto es un ejemplo autocontenido para entender el patrón):
+
+```ts
+// application/get-todo.qry.ts
+// Inspirado en: src/content/buenas-practicas-y-herramientas/arquitectura/core/core/use-cases
+
+// Firma de un Use Case (simplificada)
+export interface UseCase<In, Out> {
+  handle(input?: In): Promise<Out>
+}
+
+// Un Query es un UseCase que solo lee datos
+export type Query<Out, In = void> = UseCase<In, Out>
+
+// DTO esperado desde jsonplaceholder
+export interface Todo {
+  userId: number
+  id: number
+  title: string
+  completed: boolean
+}
+
+export class GetTodoQry implements Query<Todo, { id: number }> {
+  async handle(input?: { id: number }): Promise<Todo> {
+    const id = input?.id ?? 1
+    const res = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`)
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    return res.json() as Promise<Todo>
+  }
+}
+```
+
+Puntos clave:
+
+- La clase `GetTodoQry` implementa `Query<Todo, { id: number }>` y expone el método `handle`.
+- Dentro de `handle` hacemos la llamada al API (antes estaba en el componente).
+
+### 2) Importar y usar el `UseCaseService` local (mínimo)
+
+Para el ejercicio hemos copiado una versión mínima del servicio y middlewares dentro de esta carpeta. Úsalo así:
+
+```ts
+import { UseCaseService } from './core/use-cases/use-case-service'
+
+export const useCaseService = new UseCaseService()
+```
+
+### 3) Componer un pequeño contenedor
+
+Creamos una instancia reutilizable del `UseCaseService` y del `GetTodoQry`.
+
+```ts
+// core/container.ts
+import { UseCaseService } from './use-cases/use-case-service.ts'
+import { GetTodoQry } from '../application/get-todo.qry.ts'
+
+export const useCaseService = new UseCaseService()
+export const getTodoQry = new GetTodoQry()
+```
+
+### 4) Refactor del componente para usar el caso de uso
+
+Ahora el componente ya no hace `fetch` directo. En su lugar, ejecuta el caso de uso a través del servicio.
+
+```vue
+<template>
+  <div class="max-w-2xl mx-auto p-6 space-y-4">
+    <h1 class="text-2xl font-bold">Use Cases: del componente al caso de uso</h1>
+
+    <div class="border rounded-md p-4 bg-white">
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold">Resultado</h2>
+        <button class="px-3 py-1.5 text-sm rounded bg-blue-600 text-white hover:bg-blue-700" @click="loadTodo">
+          Volver a cargar
+        </button>
+      </div>
+
+      <div class="mt-3">
+        <pre class="text-sm whitespace-pre-wrap">{{ pretty(todo) }}</pre>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { useCaseService, getTodoQry } from './core/container'
+
+interface Todo {
+  userId: number
+  id: number
+  title: string
+  completed: boolean
+}
+
+const todo = ref<Todo | null>(null)
+
+function pretty(value: unknown) {
+  return JSON.stringify(value, null, 2)
+}
+
+async function loadTodo() {
+  todo.value = await useCaseService.execute(getTodoQry, { id: 1 })
+}
+
+onMounted(loadTodo)
+</script>
+```
+
+Observa que el componente quedó mucho más liviano: no conoce los detalles del `fetch` ni de la URL; solo invoca un caso de uso con parámetros de entrada.
+
+### 5) Beneficios del patrón
+
+- Aísla la lógica de obtención de datos (dominio/aplicación) fuera del componente.
+- Permite añadir fácilmente middlewares transversales (logs, métricas, errores, timeout).
+- Facilita el testeo del caso de uso sin montar componentes.
+- Mejora la legibilidad y el mantenimiento de la UI.

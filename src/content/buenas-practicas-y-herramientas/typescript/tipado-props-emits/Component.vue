@@ -11,7 +11,10 @@
       <button class="px-3 py-1.5 text-sm rounded bg-blue-600 text-white hover:bg-blue-700" @click="emit('change', 1)">
         Emit change(1)
       </button>
-      <button class="px-3 py-1.5 text-sm rounded bg-emerald-600 text-white hover:bg-emerald-700" @click="emit('update', input)">
+      <button
+        class="px-3 py-1.5 text-sm rounded bg-emerald-600 text-white hover:bg-emerald-700"
+        @click="emit('update', input)"
+      >
         Emit update(input)
       </button>
       <input v-model="input" class="px-2 py-1 border rounded" placeholder="nuevo valor" />
