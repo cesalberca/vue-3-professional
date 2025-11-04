@@ -1,10 +1,9 @@
 import vue from '@vitejs/plugin-vue'
-import tsconfigPaths from 'vite-tsconfig-paths'
 import {defineConfig} from 'vitest/config'
 import {playwright} from '@vitest/browser-playwright'
 
 export default defineConfig({
-  plugins: [tsconfigPaths(), vue()],
+  plugins: [vue()],
   define: {
     'process.env': JSON.stringify({}),
   },
