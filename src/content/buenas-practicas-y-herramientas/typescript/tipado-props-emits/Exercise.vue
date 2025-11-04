@@ -40,6 +40,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+// @ts-ignore
 import Component from './Component.vue'
 
 // El wrapper no recibe props ni emite eventos; sirve para pasar props al hijo y observar sus emits.
