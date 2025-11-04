@@ -43,10 +43,7 @@ describe('useExercisesStore (AAA)', () => {
 
     // Compute expected total from the same source of truth as the app
     const expectedTotal = courseStructure.modules.reduce((total, module) => {
-      return (
-        total +
-        module.sections.reduce((sectionTotal, section) => sectionTotal + section.exercises.length, 0)
-      )
+      return total + module.sections.reduce((sectionTotal, section) => sectionTotal + section.exercises.length, 0)
     }, 0)
 
     // Act: nothing (we just inspect initial state)

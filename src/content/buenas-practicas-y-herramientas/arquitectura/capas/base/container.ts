@@ -1,7 +1,7 @@
 import { FetchHttpClient } from './fetch-http-client.ts'
 import { UseCaseService } from './use-case-service.ts'
-import {TodoApiRepository} from "./todo.api-repository.ts";
-import {GetTodosQry} from "./get-todos.qry.ts";
+import { TodoApiRepository } from './todo.api-repository.ts'
+import { GetTodosQry } from './get-todos.qry.ts'
 
 export const httpClient = new FetchHttpClient('https://jsonplaceholder.typicode.com')
 export const todoRepository = new TodoApiRepository(httpClient)

@@ -1,17 +1,14 @@
 import vue from '@vitejs/plugin-vue'
-import {defineConfig} from 'vitest/config'
-import {playwright} from '@vitest/browser-playwright'
+import { defineConfig } from 'vitest/config'
+import { preview } from '@vitest/browser-preview'
 
 export default defineConfig({
   plugins: [vue()],
-  define: {
-    'process.env': JSON.stringify({}),
-  },
   test: {
     include: ['**/*.test.it.ts'],
     name: 'integration',
     browser: {
-      provider: playwright(),
+      provider: preview(),
       enabled: true,
       instances: [{ browser: 'chromium' }],
     },
