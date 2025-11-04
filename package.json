@@ -8,11 +8,11 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "vue-tsc -b",
-    "test": "npm run test:unit && npm run test:it && npm run test:e2e",
-    "test:unit": "vitest",
-    "test:it": "",
+    "test": "npm run test:unit && npm run test:integration && npm run test:e2e",
+    "test:unit": "vitest --run --project unit",
+    "test:integration": "vitest --run --project integration",
     "test:e2e": "playwright test",
-    "test:e2e:open": "playwright test --ui",
+    "test:e2e:ui": "playwright test --ui",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write --ignore-path .gitignore ."
@@ -44,6 +44,8 @@
     "@playwright/test": "^1.56.1",
     "@types/node": "24.9.2",
     "@vitejs/plugin-vue": "6.0.1",
+    "@vitest/browser-playwright": "^4.0.6",
+    "@vitest/browser-preview": "4.0.6",
     "@vue/tsconfig": "0.8.1",
     "dotenv": "17.2.3",
     "eslint": "9.38.0",
@@ -55,6 +57,7 @@
     "typescript-eslint": "8.46.2",
     "vite": "7.1.12",
     "vitest": "4.0.6",
+    "vitest-browser-vue": "^2.0.1",
     "vue-tsc": "3.1.2"
   }
 }
