@@ -40,15 +40,14 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-// @ts-ignore
 import Component from './Component.vue'
 
 // El wrapper no recibe props ni emite eventos; sirve para pasar props al hijo y observar sus emits.
 const foo = ref('hello')
-const bar = ref<number | null>(42)
+const bar = ref<number | undefined>(42)
 
-const lastChangeId = ref<number | null>(null)
-const lastUpdateValue = ref<string | null>(null)
+const lastChangeId = ref<number | undefined>(undefined)
+const lastUpdateValue = ref<string | undefined>(undefined)
 
 function onChange(id: number) {
   lastChangeId.value = id
